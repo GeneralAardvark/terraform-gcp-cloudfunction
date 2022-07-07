@@ -85,3 +85,13 @@ variable "appengine_required" {
   description = "If there are no other app engine applications in this project and region, you will need one for scheduler to function."
   default     = false
 }
+
+variable "vpc_connector" {
+  type    = string
+  default = null
+}
+
+variable "vpc_egress_option" {
+  type    = string
+  default = null
+}
