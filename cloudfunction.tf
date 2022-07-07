@@ -58,4 +58,7 @@ resource "google_cloudfunctions_function" "function" {
       resource   = local.event_resource[event_trigger.value]
     }
   }
+
+  vpc_connector                 = try(var.vpc_connector, null)
+  vpc_connector_egress_settings = try(var.vpc_egress_option, null)
 }
