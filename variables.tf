@@ -95,3 +95,12 @@ variable "vpc_egress_option" {
   type    = string
   default = null
 }
+
+variable "environment_secrets" {
+  type    = list(object({
+    key     = string
+    secret  = string
+    version = string
+  }))
+  default = []
+}

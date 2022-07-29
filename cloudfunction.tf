@@ -49,6 +49,15 @@ resource "google_cloudfunctions_function" "function" {
   service_account_email = var.service_account
   timeout               = var.function_timeout
 
+  dynamic "secret_environment_variables" {
+    for_each = toset(var.environment_secrets)
+    content {
+      key     = secret_environment_variables.value["key"]
+      secret  = secret_environment_variables.value["secret"]
+      version = secret_environment_variables.value["version"]
+    }
+  }
+
   trigger_http = var.trigger_type == "http" ? true : null
 
   dynamic "event_trigger" {
@@ -56,7 +65,7 @@ resource "google_cloudfunctions_function" "function" {
     content {
       event_type = local.event_type[event_trigger.value]
       resource   = local.event_resource[event_trigger.value]
-    }
+   }
   }
 
   vpc_connector                 = try(var.vpc_connector, null)
